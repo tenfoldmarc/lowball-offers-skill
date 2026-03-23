@@ -17,19 +17,23 @@ Try calling `mcp__apify__search-actors` with keywords "test" and limit 1. If it 
 
 Tell the user:
 ```
-You need to connect Apify to use this skill. Here's how:
+Apify isn't connected yet. It's what scrapes the property listings. Let's set it up:
 
 1. Go to https://apify.com and create a free account
-2. Go to Settings → API Tokens and copy your token
-3. Install the Apify MCP server. Add this to your Claude Code settings
-   (Settings → MCP Servers → Add):
+2. Click your profile icon (top right) → Settings → API Tokens
+3. Click "+ Create Token", give it any name, and copy the token
+4. Come back here and paste this command (replace <your token> with the token you just copied):
+```
 
-   Name: apify
-   Type: npx
-   Command: npx -y @anthropic-ai/apify-mcp-server
-   Env: APIFY_TOKEN=<your token>
+Then tell them to type this in Claude Code:
+```
+/update-config add an MCP server called "apify" with command "npx -y @anthropic-ai/apify-mcp-server" and env var APIFY_TOKEN set to <your token>
+```
 
-4. Restart Claude Code and run /lowball-offers again
+Then tell them:
+```
+5. Restart Claude Code (close it and reopen it)
+6. Run /lowball-offers again
 ```
 Stop here if Apify is not connected.
 
@@ -38,24 +42,28 @@ Try calling `mcp__instantly__list_campaigns` with limit 1. If it works, Instantl
 
 Tell the user:
 ```
-You need to connect Instantly to use this skill. Here's how:
+Instantly isn't connected yet. It's what sends the emails to agents. Let's set it up:
 
 1. Go to https://instantly.ai and create an account
-2. Go to Settings → API → copy your API key
-3. Install the Instantly MCP server. Add this to your Claude Code settings
-   (Settings → MCP Servers → Add):
+2. Click the gear icon → Settings → API → copy your API key
+3. IMPORTANT: Also go to Settings → Email Accounts and connect at least one
+   email address. This is what your offers will be sent from.
+4. Come back here and paste this command (replace <your key> with the API key you copied):
+```
 
-   Name: instantly
-   Type: npx
-   Command: npx -y @anthropic-ai/instantly-mcp-server
-   Env: INSTANTLY_API_KEY=<your key>
+Then tell them to type this in Claude Code:
+```
+/update-config add an MCP server called "instantly" with command "npx -y @anthropic-ai/instantly-mcp-server" and env var INSTANTLY_API_KEY set to <your key>
+```
 
-4. Make sure you have at least one sender email account connected in Instantly
-5. Restart Claude Code and run /lowball-offers again
+Then tell them:
+```
+5. Restart Claude Code (close it and reopen it)
+6. Run /lowball-offers again
 ```
 Stop here if Instantly is not connected.
 
-If both are connected, tell the user and proceed to Step 1.
+If both are connected, tell the user "You're all set — both Apify and Instantly are connected." and proceed to Step 1.
 
 ---
 
