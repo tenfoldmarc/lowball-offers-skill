@@ -14,44 +14,55 @@ A Claude Code skill that automates real estate lowball offers. Scrapes property 
 
 Each agent gets a unique email referencing their specific listing, the asking price, and your exact offer amount. One campaign handles all of them.
 
-## Install
+---
 
-Copy `lowball-offers.md` into your Claude Code commands directory:
+## Install (3 steps)
 
-```bash
-# Global (available in all projects)
-cp lowball-offers.md ~/.claude/commands/lowball-offers.md
+### Step 1: Download the skill file
 
-# Or project-level (available only in one project)
-cp lowball-offers.md .claude/commands/lowball-offers.md
+Open Claude Code and paste this command:
+
+```
+! curl -o ~/.claude/commands/lowball-offers.md https://raw.githubusercontent.com/tenfoldmarc/lowball-offers-skill/main/lowball-offers.md
 ```
 
-Then run it in Claude Code:
+That's it — the skill is now installed. You can verify by typing `/lowball-offers` in Claude Code.
+
+### Step 2: Connect Apify (scrapes the property listings)
+
+1. Go to [apify.com](https://apify.com) and create a free account
+2. Once logged in, click your profile icon (top right) → **Settings** → **API Tokens**
+3. Click **+ Create Token**, give it any name, and copy the token
+4. In Claude Code, type this:
+
+```
+/update-config add an MCP server called "apify" with command "npx -y @anthropic-ai/apify-mcp-server" and env var APIFY_TOKEN set to <paste your token here>
+```
+
+5. Restart Claude Code (close and reopen it)
+
+### Step 3: Connect Instantly (sends the emails)
+
+1. Go to [instantly.ai](https://instantly.ai) and create an account
+2. Once logged in, go to **Settings** (gear icon) → **API** → copy your API key
+3. **Important:** Make sure you have at least one email account connected in Instantly (Settings → Email Accounts). This is the email address your offers will be sent from.
+4. In Claude Code, type this:
+
+```
+/update-config add an MCP server called "instantly" with command "npx -y @anthropic-ai/instantly-mcp-server" and env var INSTANTLY_API_KEY set to <paste your API key here>
+```
+
+5. Restart Claude Code one more time
+
+### You're done! Run it:
 
 ```
 /lowball-offers
 ```
 
-## Requirements
+The skill will check that everything is connected and walk you through the rest.
 
-You need two MCP servers connected to Claude Code. The skill will walk you through setup if they're missing.
-
-### Apify (for scraping listings)
-- Create a free account at [apify.com](https://apify.com)
-- Get your API token from Settings → API Tokens
-- Add the MCP server to Claude Code settings:
-  - Name: `apify`
-  - Command: `npx -y @anthropic-ai/apify-mcp-server`
-  - Env: `APIFY_TOKEN=<your token>`
-
-### Instantly (for sending emails)
-- Create an account at [instantly.ai](https://instantly.ai)
-- Get your API key from Settings → API
-- Add the MCP server to Claude Code settings:
-  - Name: `instantly`
-  - Command: `npx -y @anthropic-ai/instantly-mcp-server`
-  - Env: `INSTANTLY_API_KEY=<your key>`
-- Connect at least one sender email account in Instantly
+---
 
 ## How It Works
 
@@ -82,6 +93,8 @@ Schedule:      Mon-Fri, 8am-5pm CT
 Daily limit:   30 emails/day
 Scraping cost: ~$0.07
 ```
+
+---
 
 ## Follow
 
